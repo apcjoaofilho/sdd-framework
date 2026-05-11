@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a defect in a script, template, or documentation.
+labels: ["type:bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please be specific — version, repro, expected vs actual.
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Tag, branch name, or commit SHA where you observed the issue.
+      placeholder: e.g. main @ a1b2c3d
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps
+      description: Numbered list of exact commands / actions.
+      placeholder: |
+        1. Run `python scripts/check-status.py ...`
+        2. Observe output ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include stack traces / error messages verbatim.
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      placeholder: |
+        OS: Ubuntu 24.04
+        Python: 3.10.x
+        Agent: Hermes / Claude Code / Codex / Cursor / Aider

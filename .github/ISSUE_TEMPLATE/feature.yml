@@ -1,0 +1,44 @@
+name: Feature request
+description: Suggest a new capability or improvement.
+labels: ["type:feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening: check [PLAN.md](../../PLAN.md) — your idea may already be planned (or explicitly out of scope).
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem does this solve? Who hits it?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Script
+        - Template
+        - Reference doc
+        - Hermes skill adapter
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I checked PLAN.md and this is not already covered
+          required: true
