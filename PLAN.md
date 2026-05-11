@@ -42,6 +42,9 @@ sdd-framework/
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── CHANGELOG.md                 Append-only, semver
+├── docs/                        Meta-docs about this repo (not the framework templates)
+│   ├── IMPLEMENTATION-KICKOFF.md  Self-contained prompt to start a fresh impl session
+│   └── history/                 PLAN.md archived here after v2.0.0 ships (see §9)
 ├── references/                  Long-form docs linked from short SKILL.md
 │   ├── phase-research.md
 │   ├── phase-discuss.md         (new in v2.0)

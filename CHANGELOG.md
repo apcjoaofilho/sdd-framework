@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - STATE.json gains optional `handoff_backend` and `spec_engine` fields.
 - Planned files: `references/handoff-backends.md`, `references/integration-openspec.md`, `templates/handoff-schema.yaml`, `scripts/handoff.py`, `references/borrowed/README.md` (created).
 - Added Nice-to-Have **N9** (`gitlab` handoff backend + Forgejo/Gitea/Codeberg case-by-case).
+- `docs/` directory with `IMPLEMENTATION-KICKOFF.md` (self-contained prompt to start the foundation work — M3 → M1 → M6 — in a fresh AI session) and `docs/README.md`.
 
 ### Notes
 - Project is in **planning**. No tagged release yet.
