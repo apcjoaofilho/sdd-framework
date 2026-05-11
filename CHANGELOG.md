@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Framework-owned templates for status, state, agent instructions, ADRs, manual-engine specs, and cron prompt skeletons.
+- `scripts/validate-templates.py` and template tests for the M1 template set.
 - `references/state-schema.json` and `scripts/validate-state.py` for validating machine-readable pipeline state.
 - `pyproject.toml` with development dependencies and Ruff configuration.
 - Initial repository scaffolding: PLAN.md (v2.0 roadmap), README, AGENTS.md (dogfooded), CONTRIBUTING, SECURITY, LICENSE (MIT).
