@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sdd-framework"
+version = "0.0.0"
+description = "Portable, agent-agnostic spec-driven development pipeline."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Joao Filho" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "jsonschema>=4.22",
+  "pytest>=8.0",
+  "ruff>=0.8",
+]
+
+[tool.setuptools]
+packages = []
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

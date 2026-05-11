@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `references/state-schema.json` and `scripts/validate-state.py` for validating machine-readable pipeline state.
+- `pyproject.toml` with development dependencies and Ruff configuration.
 - Initial repository scaffolding: PLAN.md (v2.0 roadmap), README, AGENTS.md (dogfooded), CONTRIBUTING, SECURITY, LICENSE (MIT).
 - Empty directory structure for `references/`, `templates/`, `scripts/`, `skill/`, `examples/`, `.github/`.
 - **Handoff/discussion layer** (PLAN.md §3.7): pluggable backend with `local` (default, files in `.sdd/handoffs/`) and `github` (Issues with defined label schema) shipping in v2.0; `gitlab` parked. Promoted to Must-Have **M12** based on community evidence (r/hermesagent megathread) plus deliberate vendor-tradeoff acceptance.

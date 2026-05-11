@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/apcjoaofilho/sdd-framework/references/state-schema.json",
+  "title": "SDD Framework STATE.json",
+  "description": "Machine-readable state for the SDD Framework pipeline.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "phase",
+    "next_step",
+    "spec",
+    "plan",
+    "branch",
+    "worktree",
+    "last_commit",
+    "last_agent",
+    "last_update",
+    "lock",
+    "retry_count",
+    "last_error",
+    "flavor",
+    "spec_engine",
+    "handoff_backend"
+  ],
+  "properties": {
+    "phase": {
+      "description": "Current pipeline phase or blocked state.",
+      "type": "string",
+      "enum": [
+        "RESEARCH",
+        "DISCUSS",
+        "SPEC",
+        "PLAN",
+        "EXECUTE",
+        "VERIFY",
+        "REVIEW",
+        "RELEASE",
+        "ARCHIVE",
+        "OBSERVE",
+        "BLOCKED"
+      ]
+    },
+    "next_step": {
+      "description": "Next concrete action for an agent or operator.",
+      "type": "string",
+      "minLength": 1
+    },
+    "spec": {
+      "description": "Path to the active spec artifact.",
+      "type": "string",
+      "minLength": 1
+    },
+    "plan": {
+      "description": "Path to the active implementation plan artifact.",
+      "type": "string",
+      "minLength": 1
+    },
+    "branch": {
+      "description": "Git branch carrying the active work.",
+      "type": "string",
+      "minLength": 1
+    },
+    "worktree": {
+      "description": "Filesystem path to the active worktree.",
+      "type": "string",
+      "minLength": 1
+    },
+    "last_commit": {
+      "description": "Last commit SHA or abbreviated SHA observed by the pipeline.",
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{7,40}$"
+    },
+    "last_agent": {
+      "description": "Agent or operator that last changed pipeline state.",
+      "type": "string",
+      "minLength": 1
+    },
+    "last_update": {
+      "description": "Last state update timestamp in ISO 8601 UTC form.",
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "lock": {
+      "description": "Advisory multi-agent lock with a TTL.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent", "started_at", "ttl_minutes"],
+      "properties": {
+        "agent": {
+          "description": "Agent that acquired the lock.",
+          "type": "string",
+          "minLength": 1
+        },
+        "started_at": {
+          "description": "Lock acquisition timestamp in ISO 8601 UTC form.",
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        "ttl_minutes": {
+          "description": "Lock time-to-live in whole minutes.",
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "retry_count": {
+      "description": "Consecutive retry count for the current phase/action.",
+      "type": "integer",
+      "minimum": 0
+    },
+    "last_error": {
+      "description": "Most recent pipeline error, or null when clear.",
+      "type": ["string", "null"]
+    },
+    "flavor": {
+      "description": "Pipeline flavor controlling applicable phases and gates.",
+      "type": "string",
+      "enum": ["software", "automation", "docs", "data"]
+    },
+    "spec_engine": {
+      "description": "Spec engine used for SPEC/APPLY/ARCHIVE.",
+      "type": "string",
+      "enum": ["openspec", "manual"]
+    },
+    "handoff_backend": {
+      "description": "Backend used for handoff and discussion records.",
+      "type": "string",
+      "enum": ["local", "github", "gitlab"]
+    }
+  }
+}
