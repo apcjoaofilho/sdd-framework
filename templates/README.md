@@ -16,6 +16,7 @@ Copy-paste artifacts users drop into their projects. Each template:
 - `project.md` — source-of-truth spec.
 - `cron-pipeline-manager.txt` — multi-project cron prompt.
 - `cron-single-project.txt` — single-project cron prompt.
+- `handoff-schema.yaml` — cross-backend schema for handoff/discussion messages (consumed by `scripts/handoff.py`).
 - `gates/` — one YAML per phase, machine-verifiable.
 
 See [PLAN.md §3.1](../PLAN.md#31-repository-layout) for the canonical inventory.

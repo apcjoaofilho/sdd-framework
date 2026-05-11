@@ -17,6 +17,7 @@ Long-form documentation. Each file is referenced from a short overview elsewhere
 - `portability-matrix.md` — agent × file × format compatibility
 - `integration-orchestrator.md` — playbook for `development-orchestrator-joao`
 - `integration-cron.md` — Hermes Agent cron tooling alignment
+- `handoff-backends.md` — pluggable handoff/discussion backends (`local` default + `github` opt-in); tradeoff and mention discipline
 - `state-schema.json` — JSON Schema for `STATE.json`
 
 See [PLAN.md §3.1](../PLAN.md#31-repository-layout) for the canonical inventory.

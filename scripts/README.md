@@ -20,6 +20,7 @@ Python tooling that consumers and CI both use.
 | `onboard.py` | Bootstraps an existing project (detects stack, generates STATUS/STATE/AGENTS) | S3 |
 | `rollback.py` | Moves a project back one phase, audit-logged | N4-prereq |
 | `acquire-lock.py` | Multi-agent lock acquire/release/check | S5 |
+| `handoff.py` | Pluggable handoff backend (`local` default + `github` opt-in). Subcommands: `acquire`, `release`, `notify`, `list`, `migrate-backend` | M12 |
 | `migrate.py` | v1.0 → v2.0 upgrade for existing prototype users | N4 |
 | `bootstrap-portability.sh` | Symlinks/copies for cross-agent files (POSIX + Windows-aware) | N5 |
 | `spawn-worktree.sh` | Worktree-by-default helper for parallel EXECUTE | S4 |

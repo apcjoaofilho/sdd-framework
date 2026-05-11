@@ -55,7 +55,8 @@ sdd-framework/
 │   ├── phase-observe.md         (optional, new in v2.0)
 │   ├── portability-matrix.md
 │   ├── integration-orchestrator.md
-│   └── integration-cron.md
+│   ├── integration-cron.md
+│   └── handoff-backends.md      (new in v2.0 — see §3.7)
 ├── templates/                   Copy-paste artifacts
 │   ├── STATUS.md                Human-readable status
 │   ├── STATE.json               Machine-readable state
@@ -65,6 +66,7 @@ sdd-framework/
 │   ├── project.md               Source-of-truth spec
 │   ├── cron-pipeline-manager.txt
 │   ├── cron-single-project.txt
+│   ├── handoff-schema.yaml      (new in v2.0 — see §3.7)
 │   └── gates/
 │       ├── research.yaml
 │       ├── discuss.yaml
@@ -81,6 +83,7 @@ sdd-framework/
 │   ├── onboard.py               Bootstraps an existing project
 │   ├── rollback.py              Moves a project back one phase
 │   ├── acquire-lock.py          Multi-agent coordination
+│   ├── handoff.py               Pluggable handoff backend (local | github | gitlab)
 │   ├── migrate.py               v1.0 → v2.0 upgrade
 │   └── bootstrap-portability.sh Symlinks / copies for cross-agent files
 ├── skill/                       Hermes Agent adapter (installable)
@@ -142,7 +145,8 @@ Two files. Different audiences. Different update cadences.
   "lock": { "agent": "codex-cli", "started_at": "2026-05-11T14:30:00Z", "ttl_minutes": 30 },
   "retry_count": 0,
   "last_error": null,
-  "flavor": "software"
+  "flavor": "software",
+  "handoff_backend": "local"
 }
 ```
 
@@ -173,6 +177,45 @@ Two patterns:
 2. **Single project** — per-project cron tracks one repo, useful for high-cadence projects.
 
 Both use `--script` (Python preprocessing) so the LLM only sees the diff that needs decisions, not raw STATUS.md content. Cron-aware retry: 3 failures → phase set to `BLOCKED`, non-silent notification dispatched.
+
+### 3.7 Handoff and discussion layer
+
+Phase state (§3.3) and handoff/discussion are distinct concerns. Mixing them couples a fast, offline-first machine artifact to a notification-heavy, internet-bound communication channel. The framework keeps them separate.
+
+**Phase state** stays in `STATE.json` + `STATUS.md` — local, fast, offline-capable, vendor-neutral.
+
+**Handoff and discussion** uses a pluggable backend declared in `STATE.json` via the `handoff_backend` field:
+
+| Backend  | Default | Storage                                                                  | Best for                                                  |
+|----------|---------|--------------------------------------------------------------------------|-----------------------------------------------------------|
+| `local`  | ✅ yes  | `.sdd/handoffs/<id>.md`                                                  | Solo + offline. No external dependency.                   |
+| `github` | opt-in  | GitHub Issues with `sdd:phase:*` and `sdd:waiting:*` labels              | Multi-agent + multi-machine + human collaboration         |
+| `gitlab` | opt-in (post-v2.0) | GitLab Issues with parity schema                              | GitLab-hosted projects                                    |
+
+**Cross-backend schema** (`templates/handoff-schema.yaml`):
+
+```yaml
+handoff:
+  id: <uuid>
+  from_agent: <name>
+  to_agent: <name>
+  phase: <RESEARCH | DISCUSS | SPEC | ...>
+  context_link: <STATE.json path or commit ref>
+  gate_passed: true | false
+  decisions: [<short text per decision>]
+  created_at: <ISO 8601>
+  status: <pending | claimed | done | blocked>
+```
+
+**Deliberate tradeoff:** the `github` backend introduces a documented, opt-in vendor dependency. In exchange operators get (a) native atomic assignment without TTL locks during handoff, (b) threaded discussion that captures decision *why* (ADR.md captures only the *what*), and (c) free human notifications via `@`-mention. Operators who don't want any of that stay on `local` and pay zero cost — the principle from §2 (no vendor lock-in) is preserved by making `local` the default.
+
+**Mention discipline (github backend only):**
+
+- `@<human>` only when phase = `BLOCKED` or DISCUSS requires answers.
+- Never `@<human>` for normal phase transitions — that is what STATUS.md history is for.
+- Agents never `@<other agent>` — claim by writing the assignee field, not by mentioning. This is the lesson community operators learned the hard way (cascading agent-to-agent messages → "Noosphere" async patterns).
+
+The adapter (`scripts/handoff.py`) exposes: `acquire`, `release`, `notify`, `list`, `migrate-backend`. Both `local` and `github` ship with v2.0; `gitlab` is parked.
 
 ---
 
@@ -205,6 +248,7 @@ Migration is a no-op if `STATE.json` already exists.
 | M7 | Terminology alignment with cron tooling | — | `references/integration-cron.md` cross-checked against current Hermes `cronjob` tool docs |
 | M8 | README, CONTRIBUTING, SECURITY, AGENTS.md (dogfooded) | — | All present at root, follow Hermes community conventions |
 | M9 | Hermes skill adapter (`skill/spec-driven-dev/SKILL.md`) | — | Skill loads in Hermes, points users at framework docs |
+| M12 | Pluggable handoff/discussion backend (`local` default + `github` opt-in) | — | `scripts/handoff.py` ships both adapters; `templates/handoff-schema.yaml` validated; `references/handoff-backends.md` documents the tradeoff and mention discipline; STATE.json schema (M3) extends with `handoff_backend` enum |
 
 ### 5.2 Should Have — strongly preferred for v2.0.0
 
@@ -239,6 +283,7 @@ Migration is a no-op if `STATE.json` already exists.
 - All Must-Have items shipped.
 - ≥ 6 of 8 Should-Have items shipped.
 - Greenfield example runs from `RESEARCH` to `ARCHIVE` driven only by cron + skill adapter.
+- Greenfield example demonstrates **both** handoff backends (`local` and `github`) end-to-end.
 - Migration script tested against ≥ 1 real v1.0 project.
 - Public docs (README + every `references/` file) reviewed by at least one external contributor.
 - CI green: lint, template validation, JSON schema, example smoke test.
@@ -262,7 +307,7 @@ These may move to v2.1+ if traction justifies.
 1. **Plan file location** — `.sdd/plans/` (proposed) vs reusing `.hermes/plans/` for Hermes users. Lean toward `.sdd/` for portability; provide symlink helper.
 2. **OpenSpec compatibility** — can we use OpenSpec's `openspec/` layout verbatim, or do we need a superset? Need to validate against current OpenSpec version.
 3. **Lock semantics** — advisory only (any agent can override stale lock) vs enforced (require explicit release). Lean advisory.
-4. **DISCUSS without humans** — when running fully autonomous via cron, who answers DISCUSS questions? Possibly a sub-agent flavor that drafts answers for human review.
+4. **DISCUSS without humans** — when running fully autonomous via cron, who answers DISCUSS questions? With the `github` handoff backend (M12) one option is `@`-mention the operator on a DISCUSS issue and pause until they reply; with the `local` backend a sub-agent flavor drafts answers for human review. Pick once an example exists.
 
 ---
 
