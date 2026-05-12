@@ -1,0 +1,11 @@
+{
+  "phase": "REVIEW",
+  "checks": {
+    "review_doc_exists": {"type": "boolean", "required": true},
+    "critical_findings_open": {"type": "boolean", "required": false},
+    "important_findings_open": {"type": "boolean", "required": false},
+    "documentation_reviewed": {"type": "boolean", "required": true},
+    "review_result": {"type": "enum", "values": ["approved", "changes_requested", "blocked"]},
+    "next_phase": {"type": "enum", "values": ["RELEASE", "ARCHIVE", "BLOCKED"]}
+  }
+}
