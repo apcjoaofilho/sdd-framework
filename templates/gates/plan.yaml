@@ -1,0 +1,11 @@
+{
+  "phase": "PLAN",
+  "checks": {
+    "plan_doc_exists": {"type": "boolean", "required": true},
+    "tasks_are_atomic": {"type": "boolean", "required": true},
+    "task_paths_are_exact": {"type": "boolean", "required": true},
+    "test_steps_defined": {"type": "boolean", "required": true},
+    "commands_are_copy_paste_runnable": {"type": "boolean", "required": true},
+    "next_phase": {"type": "enum", "values": ["EXECUTE", "BLOCKED"]}
+  }
+}
