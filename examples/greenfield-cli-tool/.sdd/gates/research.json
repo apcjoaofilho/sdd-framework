@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "research_doc_exists": true,
+    "approaches_compared": 2,
+    "citations_present": true,
+    "tradeoffs_recorded": true,
+    "next_phase": "SPEC",
+    "next_step": "Draft the CLI tool spec from the accepted research direction."
+  }
+}

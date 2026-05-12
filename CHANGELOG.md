@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `scripts/advance-pipeline.py` gate consumption with STATE/STATUS updates, retry handling, and BLOCKED escalation after repeated gate failures.
+- Greenfield CLI smoke fixture and tests covering RESEARCH to SPEC advancement through `examples/greenfield-cli-tool`.
 - Framework-owned templates for status, state, agent instructions, ADRs, manual-engine specs, handoff schema, and cron prompt skeletons.
 - Machine-verifiable gate templates for all nine pipeline phases.
 - `scripts/validate-templates.py` and template tests for the M1 template set.
