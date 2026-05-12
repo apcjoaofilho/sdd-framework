@@ -1,0 +1,10 @@
+{
+  "phase": "RELEASE",
+  "checks": {
+    "tag_created": {"type": "boolean", "required": true},
+    "tag_pushed": {"type": "boolean", "required": true},
+    "release_notes_published": {"type": "boolean", "required": true},
+    "artifact_published": {"type": "enum", "values": ["yes", "not_applicable"]},
+    "next_phase": {"type": "enum", "values": ["ARCHIVE", "BLOCKED"]}
+  }
+}
