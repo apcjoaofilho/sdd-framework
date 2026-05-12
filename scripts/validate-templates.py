@@ -77,8 +77,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
 def load_json(path: Path, kind: str) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
-    except FileNotFoundError:
-        raise FileNotFoundError(f"{kind} not found: {path}")
+    except FileNotFoundError as exc:
+        raise FileNotFoundError(f"{kind} not found: {path}") from exc
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid {kind}: {exc.msg}") from exc
 
