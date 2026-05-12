@@ -1,0 +1,12 @@
+{
+  "phase": "SPEC",
+  "checks": {
+    "spec_artifacts_exist": {"type": "boolean", "required": true},
+    "functional_requirements_present": {"type": "boolean", "required": true},
+    "non_functional_requirements_present": {"type": "boolean", "required": true},
+    "acceptance_criteria_present": {"type": "boolean", "required": true},
+    "adr_required": {"type": "enum", "values": ["yes", "no", "created"]},
+    "spec_engine": {"type": "enum", "values": ["openspec", "manual"]},
+    "next_phase": {"type": "enum", "values": ["PLAN", "BLOCKED"]}
+  }
+}
