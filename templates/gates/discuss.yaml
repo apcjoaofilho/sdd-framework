@@ -1,0 +1,10 @@
+{
+  "phase": "DISCUSS",
+  "checks": {
+    "discussion_doc_exists": {"type": "boolean", "required": true},
+    "scope_frozen": {"type": "boolean", "required": true},
+    "success_criteria_agreed": {"type": "boolean", "required": true},
+    "open_questions": {"type": "enum", "values": ["none", "blocked"]},
+    "next_phase": {"type": "enum", "values": ["SPEC", "BLOCKED"]}
+  }
+}

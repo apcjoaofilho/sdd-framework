@@ -1,0 +1,10 @@
+{
+  "phase": "RESEARCH",
+  "checks": {
+    "research_doc_exists": {"type": "boolean", "required": true},
+    "approaches_compared": {"type": "integer", "minimum": 2, "maximum": 3},
+    "citations_present": {"type": "boolean", "required": true},
+    "tradeoffs_recorded": {"type": "boolean", "required": true},
+    "next_phase": {"type": "enum", "values": ["DISCUSS", "SPEC", "BLOCKED"]}
+  }
+}

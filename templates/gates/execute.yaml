@@ -1,0 +1,11 @@
+{
+  "phase": "EXECUTE",
+  "checks": {
+    "planned_tasks_complete": {"type": "boolean", "required": true},
+    "spec_review_passed": {"type": "boolean", "required": true},
+    "quality_review_passed": {"type": "boolean", "required": true},
+    "semantic_commits_present": {"type": "boolean", "required": true},
+    "tests_pass": {"type": "boolean", "required": true},
+    "next_phase": {"type": "enum", "values": ["VERIFY", "REVIEW", "BLOCKED"]}
+  }
+}

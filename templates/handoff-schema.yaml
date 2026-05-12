@@ -1,0 +1,13 @@
+{
+  "handoff": {
+    "id": "<uuid>",
+    "from_agent": "<name>",
+    "to_agent": "<name>",
+    "phase": "<RESEARCH | DISCUSS | SPEC | PLAN | EXECUTE | VERIFY | REVIEW | RELEASE | ARCHIVE | OBSERVE | BLOCKED>",
+    "context_link": "<STATE.json path or commit ref>",
+    "gate_passed": true,
+    "decisions": ["<short text per decision>"],
+    "created_at": "<ISO 8601>",
+    "status": "<pending | claimed | done | blocked>"
+  }
+}

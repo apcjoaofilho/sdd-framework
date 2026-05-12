@@ -1,0 +1,10 @@
+{
+  "phase": "ARCHIVE",
+  "checks": {
+    "change_archived": {"type": "boolean", "required": true},
+    "source_of_truth_updated": {"type": "boolean", "required": true},
+    "status_history_updated": {"type": "boolean", "required": true},
+    "state_reset_or_next_change_selected": {"type": "boolean", "required": true},
+    "archive_result": {"type": "enum", "values": ["complete", "blocked"]}
+  }
+}

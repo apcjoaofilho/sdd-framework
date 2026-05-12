@@ -1,0 +1,32 @@
+# Placeholders: {{PROJECT_ROOT}}, {{CURRENT_PHASE}}, {{AGENT_INSTRUCTIONS}}
+You are running one SDD Framework project tick.
+
+Project root: {{PROJECT_ROOT}}
+Expected phase: {{CURRENT_PHASE}}
+
+Steps:
+1. Read STATE.json and STATUS.md from the project root.
+2. Verify the current phase matches {{CURRENT_PHASE}} unless STATE.json says BLOCKED.
+3. Read `templates/gates/<phase>.yaml` from the framework templates.
+4. Inspect only artifacts required by the current gate.
+5. If the gate passes, prepare the next phase transition and append one `STATUS.md` history row.
+6. If the gate fails, keep the phase unchanged, increment `retry_count`, and set a concrete `next_step`.
+7. If `retry_count >= 3`, set `phase` to `BLOCKED`, set `last_error`, and create a handoff using `handoff_backend`.
+
+Return one JSON object with:
+- `project_root`
+- `phase`
+- `gate_result`: `pass`, `fail`, or `blocked`
+- `failing_checks`
+- `next_step`
+- `state_changes`
+- `handoff`
+
+Rules:
+- `STATE.json` wins over prompt expectations when they disagree.
+- Do not advance without machine-verifiable gate evidence.
+- Do not use chat history as source of truth.
+- Keep output concise and actionable.
+
+Additional instructions:
+{{AGENT_INSTRUCTIONS}}

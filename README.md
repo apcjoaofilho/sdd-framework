@@ -43,6 +43,8 @@ The pipeline is driven by:
 - **`STATUS.md`** — narrative, human-first.
 - **`STATE.json`** — machine-readable; cron parses it without an LLM.
 - **`AGENTS.md`** — the bridge that makes any agent productive on the project.
+- **`.sdd/`** — framework-owned plans and local handoff records.
+- **`openspec/`** — OpenSpec-owned specs when `spec_engine = openspec`.
 
 A cron job iterates over your projects, advances those whose gates pass, escalates those that stall.
 
@@ -59,11 +61,15 @@ A v1.0 of this framework existed as a Hermes Agent skill (`spec-driven-dev`). Th
 ## Quick taste — the pipeline applied to a tiny project
 
 ```bash
-# Onboard an existing project (planned, not yet implemented)
+# Onboard an existing project
 python scripts/onboard.py /path/to/your/project --flavor software
 
-# Look at where it is
-python scripts/check-status.py /path/to/your/project
+# Register projects for the pipeline manager
+mkdir -p ~/.sdd
+printf 'projects:\n  - path: /path/to/your/project\n' > ~/.sdd/projects.yaml
+
+# Look at where registered projects are
+python scripts/check-status.py --projects-file ~/.sdd/projects.yaml
 
 # Let the cron operator drive
 hermes cronjob add "every 6h" \
@@ -96,6 +102,17 @@ sdd-framework/
 ├── examples/     end-to-end runnable demos
 └── PLAN.md       v2.0 roadmap (this lives here until v2.0 ships)
 ```
+
+Key references:
+
+- [Portability matrix](references/portability-matrix.md) — artifact ownership across OpenSpec, the framework, and orchestrators.
+- [Cron integration](references/integration-cron.md) — pipeline-manager and single-project cron patterns.
+- [OpenSpec integration](references/integration-openspec.md) — phase mapping to `openspec propose`, `openspec apply`, and `openspec archive`.
+- [Handoff backends](references/handoff-backends.md) — local and GitHub handoff behavior.
+
+## Documentation in the workflow
+
+Documentation is part of the phase gates, not a cleanup task after release. Specs and ADRs are updated in SPEC, implementation plans are written in PLAN, and user or operator docs are checked during VERIFY and REVIEW. If a change does not need documentation, the gate evidence should say so explicitly.
 
 ---
 
