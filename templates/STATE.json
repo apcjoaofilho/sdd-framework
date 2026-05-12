@@ -1,0 +1,21 @@
+{
+  "phase": "RESEARCH",
+  "next_step": "Write the initial problem statement and compare candidate approaches.",
+  "spec": "openspec/project.md",
+  "plan": ".sdd/plans/README.md",
+  "branch": "main",
+  "worktree": ".",
+  "last_commit": "0000000",
+  "last_agent": "human",
+  "last_update": "1970-01-01T00:00:00Z",
+  "lock": {
+    "agent": "none",
+    "started_at": "1970-01-01T00:00:00Z",
+    "ttl_minutes": 1
+  },
+  "retry_count": 0,
+  "last_error": null,
+  "flavor": "software",
+  "spec_engine": "openspec",
+  "handoff_backend": "local"
+}
