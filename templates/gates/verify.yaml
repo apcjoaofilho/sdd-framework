@@ -1,0 +1,12 @@
+{
+  "phase": "VERIFY",
+  "checks": {
+    "verification_json_exists": {"type": "boolean", "required": true},
+    "all_tests_pass": {"type": "boolean", "required": true},
+    "lint_clean": {"type": "boolean", "required": true},
+    "no_regressions_detected": {"type": "boolean", "required": true},
+    "documentation_updated_or_not_applicable": {"type": "boolean", "required": true},
+    "verification_result": {"type": "enum", "values": ["pass", "fail", "blocked"]},
+    "next_phase": {"type": "enum", "values": ["REVIEW", "BLOCKED"]}
+  }
+}
