@@ -8,7 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- `references/state-schema.json` and `scripts/validate-state.py` for validating machine-readable pipeline state.
+- Framework-owned templates for status, state, agent instructions, ADRs, manual-engine specs, handoff schema, and cron prompt skeletons.
+- Machine-verifiable gate templates for all nine pipeline phases.
+- `scripts/validate-templates.py` and template tests for the M1 template set.
+- `scripts/check-status.py` and tests for reading `~/.sdd/projects.yaml` and emitting phase, branch, lock status, retry count, and errors as JSON.
+- `references/state-schema.json`, `scripts/validate-state.py`, and schema tests for validating machine-readable pipeline state.
+- CI workflows for tests, Ruff linting, and template validation.
 - `pyproject.toml` with development dependencies and Ruff configuration.
 - Initial repository scaffolding: PLAN.md (v2.0 roadmap), README, AGENTS.md (dogfooded), CONTRIBUTING, SECURITY, LICENSE (MIT).
 - Empty directory structure for `references/`, `templates/`, `scripts/`, `skill/`, `examples/`, `.github/`.
@@ -19,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Planned files: `references/handoff-backends.md`, `references/integration-openspec.md`, `templates/handoff-schema.yaml`, `scripts/handoff.py`, `references/borrowed/README.md` (created).
 - Added Nice-to-Have **N9** (`gitlab` handoff backend + Forgejo/Gitea/Codeberg case-by-case).
 - `docs/` directory with `IMPLEMENTATION-KICKOFF.md` (self-contained prompt to start the foundation work — M3 → M1 → M6 — in a fresh AI session) and `docs/README.md`.
+
+### Changed
+- README now links the core reference docs and makes documentation evidence part of VERIFY/REVIEW workflow expectations.
 
 ### Notes
 - Project is in **planning**. No tagged release yet.
